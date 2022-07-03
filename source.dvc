@@ -1,0 +1,5 @@
+outs:
+- md5: f39c3d146ddc072929f352ff7cac9504.dir
+  size: 13454
+  nfiles: 4
+  path: source
