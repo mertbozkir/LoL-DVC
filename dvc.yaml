@@ -26,13 +26,15 @@ stages:
   train:
     cmd: python source/train.py features/train_features.csv 
     deps:
-    - features/train_features.csv
     - source/train.py
     params:
     - train.model
+    metrics: 
+    - train_metrics.json:
+        cache: false
     outs:
     - models/LGBMClassifier.pkl
-
+    
   evaluate:
     cmd: python source/evaluate.py models/LGBMClassifier.pkl features/train_features.csv features/test_features.csv
     deps:
@@ -40,5 +42,10 @@ stages:
     - models/LGBMClassifier.pkl
     - features/train_features.csv
     - features/test_features.csv
+    
+    metrics:
+    - evaluation_metrics.json:
+        cache: false
+
     params: 
     - evaluate.fold_number
