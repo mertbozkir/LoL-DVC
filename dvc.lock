@@ -15,40 +15,40 @@ stages:
       size: 3150
     params:
       params.yaml:
-        preprocess.min: 10
+        preprocess.min: 15
         preprocess.test_size: 0.25
     outs:
     - path: prepared/test_dataframe.csv
-      md5: 0bdadd9921eae29810e72ec1b6c11618
-      size: 1044330
+      md5: 3cbaf88f9e6286a360a36780590f75f2
+      size: 1085008
     - path: prepared/train_dataframe.csv
-      md5: b6efb0b6dc587ea9e2e42be29f50a11b
-      size: 3130662
+      md5: 7e107ed3cb9a85ea5e30387673ff5c29
+      size: 3253499
   featurize:
     cmd: python source/featurize.py prepared/train_dataframe.csv prepared/test_dataframe.csv
     deps:
     - path: prepared/test_dataframe.csv
-      md5: 0bdadd9921eae29810e72ec1b6c11618
-      size: 1044330
+      md5: 3cbaf88f9e6286a360a36780590f75f2
+      size: 1085008
     - path: prepared/train_dataframe.csv
-      md5: b6efb0b6dc587ea9e2e42be29f50a11b
-      size: 3130662
+      md5: 7e107ed3cb9a85ea5e30387673ff5c29
+      size: 3253499
     - path: source/featurize.py
       md5: ecd930a77b0f10fcec5e98fee6c3ef06
       size: 1515
     outs:
     - path: features/test_features.csv
-      md5: 652a1679ac4255acef00d4a69e47abb0
-      size: 1455825
+      md5: a7e838164abe58a88f7879cccd5cea93
+      size: 1513200
     - path: features/train_features.csv
-      md5: fbb27b489982d3e4a76a13ad56ec089a
-      size: 4375745
+      md5: f4a33ec9d18a9d8ff3be09dcffee6f65
+      size: 4553076
   train:
     cmd: python source/train.py features/train_features.csv
     deps:
     - path: features/train_features.csv
-      md5: fbb27b489982d3e4a76a13ad56ec089a
-      size: 4375745
+      md5: f4a33ec9d18a9d8ff3be09dcffee6f65
+      size: 4553076
     - path: source/train.py
       md5: 9beafea79a1053839db551c8ffe789ab
       size: 1662
@@ -57,21 +57,21 @@ stages:
         train.model: LGBMClassifier
     outs:
     - path: models/LGBMClassifier.pkl
-      md5: d97a22d72b97125426df9eb8392e033f
-      size: 347755
+      md5: b7d23ed5a7cdfde73fc589a4311cf83e
+      size: 348115
   evaluate:
     cmd: python source/evaluate.py models/LGBMClassifier.pkl features/train_features.csv
       features/test_features.csv
     deps:
     - path: features/test_features.csv
-      md5: 652a1679ac4255acef00d4a69e47abb0
-      size: 1455825
+      md5: a7e838164abe58a88f7879cccd5cea93
+      size: 1513200
     - path: features/train_features.csv
-      md5: fbb27b489982d3e4a76a13ad56ec089a
-      size: 4375745
+      md5: f4a33ec9d18a9d8ff3be09dcffee6f65
+      size: 4553076
     - path: models/LGBMClassifier.pkl
-      md5: d97a22d72b97125426df9eb8392e033f
-      size: 347755
+      md5: b7d23ed5a7cdfde73fc589a4311cf83e
+      size: 348115
     - path: source/evaluate.py
       md5: e29720059b99b61051751e139aa35af2
       size: 7127
